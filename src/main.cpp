@@ -12,6 +12,8 @@ void handler(int sig) {
   }
 
   fclose(LogFile);
+  sleep(1);
+  exit(EXIT_SUCCESS);
 } 
 /*                                      End Signal Handler                               */
 
@@ -40,10 +42,12 @@ int main(){
       }   
     }
     
-    
+    printf("Finished Creating Processes\n");fflush(stdout);
+   /*
+    TODO : Fix bugs of watch dog 
     while (1)
     {
-      sleep(10);
+      sleep(9);
       int min = INT32_MAX;
       for (int  i = 0; i < NUM_PROC; i++)
       {
@@ -52,19 +56,19 @@ int main(){
             min = tmp;
           }
       }
-        if (min>20){
-          printf("ddd");
+      printf("%d",min);
+        if (min+1 >= 20){
           kill(getpid(),SIGINT);
           sleep(1);
           goto waiting;
 
         }
-      
+      sleep(1);
       
     }
-    
-    
-    waiting:pid_t wpid;
+     waiting:
+    */
+    pid_t wpid;
     while ((wpid = wait(&status)) > 0){
         PrintLog("The process %d exited with status: %d\n",wpid,status);
     }

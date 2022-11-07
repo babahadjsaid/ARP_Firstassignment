@@ -24,7 +24,7 @@ int main(){
             data.p[0] = x + x*0.05*(rand()*2)/(RAND_MAX+0.0f);
             SendData(fd[2],&data);
             }
-        if (choice[1]) {
+        if (choice[1]) { 
             ReceiveData(fd[1],&y);
             data.p[1] = y + y*0.005*(rand()*2)/(RAND_MAX+0.0f);
             SendData(fd[2],&data);

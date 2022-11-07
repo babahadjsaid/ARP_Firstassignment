@@ -34,7 +34,7 @@ int main(){
         if (speed == 0)
         {
             continue;
-        }
+        } 
         
         // if the hoist reaches the limit of its track signal an emergency stop
         if (x + speed*0.1f>=100 or x + speed*0.1f<0)

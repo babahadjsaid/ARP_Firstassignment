@@ -42,7 +42,7 @@ int main(){
         }
         // else update the postion according to the current speed 
 
-        y += speed*0.1f;
+        y += speed*0.1f; 
         
         // send the new Y Coordinate to the real world to apply noise to it 
         Send:SendData(fd[1],&y);

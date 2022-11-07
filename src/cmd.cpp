@@ -91,7 +91,7 @@ int main(){
 
     while(1){
         if ( kbhit() ) {
-            //Check the pressed key and perform the coressponding action
+            //Check the pressed key and perform the coressponding action.
             ch = getch();
             switch (ch)
             {

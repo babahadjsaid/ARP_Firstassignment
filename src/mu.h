@@ -16,6 +16,7 @@
 #include <chrono>
 #include <math.h>
 
+
 using namespace std;
 
 
@@ -51,6 +52,8 @@ void CreateLog(char* Fname);
 long GetTimeNow();
 void PrintLog(const char *fmt, ...);
 long GetLastEdit(char* Fname);
+void updateGrid();
+void initGrid();
 /*                                       End Functions declaration                        */
 
 
@@ -95,6 +98,7 @@ extern char* ProcessNAme;
 extern int ReadyPipes[];
 extern FILE *LogFile;
 extern char Printable[100];
+extern char grid[25][100];
 
 int openmode[2] = {O_RDONLY,O_WRONLY};
 #endif
@@ -191,6 +195,7 @@ char Printable[100];
 char* ProcessNAme = V"inspect";
 int fd[1];
 char filenames[1][20] = {"rw_in 0"};
+char grid[25][100];
 #endif
 /*                                             End Inspect                                */
 

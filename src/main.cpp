@@ -12,7 +12,7 @@ void handler(int sig) {
   }
 
   fclose(LogFile);
-  sleep(2);
+  sleep(1);
   exit(EXIT_SUCCESS);
 } 
 /*                                      End Signal Handler                               */

@@ -11,26 +11,7 @@ void signaleHandler(int sig){
 }
 /*                                      End Signal Handler                               */
 
-void updateGrid(){
-    for (int i = 0; i < 25; i++)
-    {
-        for (int j = 0; j < 100; j++)
-        {
-            printf("%c",grid[i][j]);
-        }
-        printf("\n");fflush(stdout);
-    }
-    printf("\n\n");fflush(stdout);
-}
-void initGrid(){
-    for (int i = 0; i < 25; i++)
-    {
-        for (int j = 0; j < 100; j++)
-        {
-            grid[i][j] = '.';
-        }
-    }
-}
+
 int main(){
     //Create the Log file
     CreateLog(ProcessNAme);
@@ -39,11 +20,11 @@ int main(){
     signal(SIGINT,signaleHandler);
     //Save PID for process communication through signals
     WritePID(ProcessNAme);
-    //Create Pipes for process communication
+    //Create Pipes for process communication.
     CreatePipes(1);
-    // variable that holds the pressed key
+    // variable that holds the pressed key.
     char ch;
-    //Data to transfer through the pipe
+    //Data to transfer through the pipe.
     Data data;
     initGrid();
     updateGrid();

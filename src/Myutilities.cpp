@@ -20,7 +20,7 @@ int spawn(char* comands,char* args[],int *pid){
 }
 
 
-void WritePID(char* Fname){
+void WritePID(char* Fname){ 
     //create/modify(if file exist) a file to write the pid of the main process 
     fprintf(LogFile,"[%ld] Saving the %s Process ID...\n",GetTimeNow(),Fname);
     mkdir("./.data/",0666);
@@ -34,6 +34,27 @@ void WritePID(char* Fname){
     fclose(f);
 }
 
+
+void updateGrid(){
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            printf("%c",grid[i][j]);
+        }
+        printf("\n");fflush(stdout);
+    }
+    printf("\n\n");fflush(stdout);
+}
+void initGrid(){
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            grid[i][j] = '.';
+        }
+    }
+}
 int ReadPID(char* Fname){
     char ff[30];
     fprintf(LogFile,"[%ld] Reading PID of %s From %s...\n",GetTimeNow(),Fname,ProcessNAme);

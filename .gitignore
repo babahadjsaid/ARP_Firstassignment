@@ -2,3 +2,4 @@
 ./.data/*
 ./.Logs/*
 ./src/test.cpp
+./.vscode/*

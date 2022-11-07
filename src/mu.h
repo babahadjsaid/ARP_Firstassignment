@@ -14,6 +14,7 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <chrono>
+#include <math.h>
 
 using namespace std;
 

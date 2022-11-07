@@ -1,7 +1,7 @@
 #define Inspect 1
 #include "mu.h"
 
-
+char grid[25][100];
 
 
 /*                                      Signal Handler                                   */
@@ -11,8 +11,26 @@ void signaleHandler(int sig){
 }
 /*                                      End Signal Handler                               */
 
-
-
+void updateGrid(){
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            printf("%c",grid[i][j]);
+        }
+        printf("\n");fflush(stdout);
+    }
+    printf("\n\n");fflush(stdout);
+}
+void initGrid(){
+    for (int i = 0; i < 25; i++)
+    {
+        for (int j = 0; j < 100; j++)
+        {
+            grid[i][j] = '.';
+        }
+    }
+}
 int main(){
     //Create the Log file
     CreateLog(ProcessNAme);
@@ -27,7 +45,8 @@ int main(){
     char ch;
     //Data to transfer through the pipe
     Data data;
-
+    initGrid();
+    updateGrid();
     while (1)
     {
         if ( kbhit() ) {
@@ -48,7 +67,12 @@ int main(){
         int* choice = PipeToSelect(1);
         if(choice[0]){
             ReceiveData(fd[0],&data);
-            printf("positions x:%.2f,y:%.2f\r",data.p[0],data.p[1]);
+            int x = floor(data.p[0]);
+            int y = floor(data.p[1]/4);
+            grid[y][x] = '#';
+            updateGrid();
+            //printf("positions x:%.2f,y:%.2f\r",data.p[0],data.p[1]);
+            grid[y][x] = '.';
         }
         //collect the variable choice as it is a variable in the heap area
         // it is bad for real time operation (non deterministic property) 

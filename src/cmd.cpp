@@ -95,11 +95,11 @@ int main(){
             ch = getch();
             switch (ch)
             {
-            case 'z': speed2+=0.1;SendData(fd[1],&speed2);
+            case 's': speed2+=0.1;SendData(fd[1],&speed2);
                 goto PNdC;
             case 'e': speed2=0;SendData(fd[1],&speed2);
                 goto PNdC;
-            case 's': speed2 -=0.1;SendData(fd[1],&speed2);
+            case 'z': speed2 -=0.1;SendData(fd[1],&speed2);
                 goto PNdC;
             case 'd': speed1+=0.1;SendData(fd[0],&speed1);
                 goto PNdC;

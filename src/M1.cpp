@@ -1,5 +1,5 @@
 #define M1 1
-#include "mu.h"
+#include "./../include/mu.h"
 
 
 /*                                      Signal Handler                                   */
@@ -24,13 +24,12 @@ int main(){
 
     while(1){
         // if there is new speed to apply Read it and update the Speed Var
-        int* choice = PipeToSelect(1);
+        PipeToSelect(1);
         if (choice[0])
         {
             ReceiveData(fd[0],&speed);   
         }
-        //for memory Managment
-        delete(choice);
+        
         if (speed == 0)
         {
             continue;
@@ -39,7 +38,7 @@ int main(){
         // if the hoist reaches the limit of its track signal an emergency stop
         if (x + speed*0.1f>=100 or x + speed*0.1f<0)
         {
-            kill(ReadPID(V"cmd"),SIGUSR1);
+            kill(ReadPID(CMDF),SIGUSR1);
             goto Send;
         }
         // else update the postion according to the current speed 

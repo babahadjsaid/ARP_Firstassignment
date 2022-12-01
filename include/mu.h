@@ -29,6 +29,12 @@ using namespace std;
 #define SAMPLING_PERIODE 100 MS
 #define BUFF_SIZE 8192
 #define FLF fflush(LogFile);
+#define CMDF V"command"
+#define InspectF V"inspection"
+#define MASTERF V"master"
+#define M1F V"M1" 
+#define M2F V"M2" 
+#define RWF V"RW" 
 /*                                       End Macros                                       */
 
 /*                                       Data Struct                                      */
@@ -80,25 +86,25 @@ void ReceiveData(int fd,t *d){
 
 /*                                             UTILS                                      */
 #ifndef UTILS
-#include <conio.h>
 #include <iostream>
-struct timeval timeout;
+struct timeval Timeout;
 
-#ifndef MAIN
+#ifndef MASTER
 void GarbgeCollection(int numFiles);
 void CreatePipes(int numPioes);
-int* PipeToSelect(int numPipes);
+void PipeToSelect(int numPipes);
+
 #endif
 
 #else
-extern struct timeval timeout;
+extern struct timeval Timeout;
 extern int fd[];
-extern char filenames[][20];
+extern char PipeFN[][20];
 extern char* ProcessNAme;
 extern int ReadyPipes[];
 extern FILE *LogFile;
 extern char Printable[100];
-extern char grid[25][100];
+extern int choice[3];
 
 int openmode[2] = {O_RDONLY,O_WRONLY};
 #endif
@@ -106,20 +112,22 @@ int openmode[2] = {O_RDONLY,O_WRONLY};
 /*                                             End UTILS                                  */
 
 
-/*                                             MAIN                                      */
-#ifdef MAIN 
+/*                                             MASTER                                      */
+#ifdef MASTER 
 #define FIRST_BACKGROUND_P 1
 FILE *LogFile;
 char Printable[100];
-char* ProcessNAme = V"main";
+char* ProcessNAme = MASTERF;
 int fd[0];
-char* filenames[0];
-char *CAA[NUM_PROC] = {V"cmd",V"inspect",V"M1",V"M2",V"RW"};//Commands And Arguments 
+char* PipeFN[0];
+char *CAA[NUM_PROC] = {CMDF,InspectF,M1F,M2F,RWF};//Commands And Arguments 
 int signals[NUM_PROC];
 char *args[4] ={V"konsole",V"-e",V"tmp" ,V NULL};
 int children[NUM_PROC];
+bool SIGFLAG = false;
+int choice;
 #endif
-/*                                             End MAIN                                  */
+/*                                             End MASTER                                  */
 
 
 
@@ -132,11 +140,12 @@ int children[NUM_PROC];
 #define REWIND_PERIODE 1 MS MS
 FILE *LogFile;
 char Printable[100];
-char* ProcessNAme = V"cmd";
+char* ProcessNAme = CMDF;
 int fd[NUM_PIPES];
 bool nohitx = true;
 bool nohity = true;
-char filenames[NUM_PIPES][20] = {"CMD_m1 1","CMD_m2 1"};
+int choice[NUM_PIPES];
+char PipeFN[NUM_PIPES][20] = {"CMD_m1 1","CMD_m2 1"};
 float speed1 = 0.0f,speed2 = 0.0f;
 #endif
 /*                                             End CMD                                   */
@@ -151,10 +160,10 @@ FILE *LogFile;
 char Printable[100];
 #define NUM_PIPES 2 
 
-char *ProcessNAme = V"M1";
+char *ProcessNAme = M1F;
 int fd[2];
-char filenames[2][20] = {"CMD_m1 0","m1_rw 1"};
-
+char PipeFN[NUM_PIPES][20] = {"CMD_m1 0","m1_rw 1"};
+int choice[NUM_PIPES];
 #endif
 /*                                             End M1                                    */
 
@@ -167,9 +176,10 @@ FILE *LogFile;
 char Printable[100];
 #define NUM_PIPES 2
 
-char* ProcessNAme = V"M2";
+char* ProcessNAme = M2F;
 int fd[2];
-char filenames[2][20] = {"CMD_m2 0","m2_rw 1"};
+char PipeFN[2][20] = {"CMD_m2 0","m2_rw 1"};
+int choice[NUM_PIPES];
 #endif
 /*                                             End M2                                    */
 
@@ -180,9 +190,10 @@ char filenames[2][20] = {"CMD_m2 0","m2_rw 1"};
 FILE *LogFile;
 char Printable[100];
 #define NUM_PIPES 3
-char* ProcessNAme = V"RW";
+char* ProcessNAme = RWF;
 int fd[3];
-char filenames[3][20] = {"m1_rw 0","m2_rw 0","rw_in 1"};
+char PipeFN[3][20] = {"m1_rw 0","m2_rw 0","rw_in 1"};
+int choice[NUM_PIPES];
 #endif
 /*                                             End RW                                    */
 
@@ -192,10 +203,11 @@ char filenames[3][20] = {"m1_rw 0","m2_rw 0","rw_in 1"};
 FILE *LogFile;
 char Printable[100];
 #define NUM_PIPES 1
-char* ProcessNAme = V"inspect";
+char* ProcessNAme = InspectF;
 int fd[1];
-char filenames[1][20] = {"rw_in 0"};
+char PipeFN[1][20] = {"rw_in 0"};
 char grid[25][100];
+int choice[NUM_PIPES];
 #endif
 /*                                             End Inspect                                */
 

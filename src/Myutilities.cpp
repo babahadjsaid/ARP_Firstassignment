@@ -1,7 +1,8 @@
 #define UTILS 2
 
 
-#include "mu.h"
+#include "./../include/mu.h"
+
 
 
 int spawn(char* comands,char* args[],int *pid){
@@ -27,7 +28,15 @@ void WritePID(char* Fname){
     char ff[20];
     // 
     sprintf(ff,"./.data/%s.txt",Fname);
-    FILE *f = fopen(ff,"w");
+    
+    FILE *f;
+    if ((f = fopen(ff,"w"))==NULL)
+    {
+        perror("Error");
+        exit(-3);
+    }
+    
+
     int pid = getpid();
     fprintf(f,"%d",pid);
     //close file
@@ -35,31 +44,15 @@ void WritePID(char* Fname){
 }
 
 
-void updateGrid(){
-    for (int i = 0; i < 25; i++)
-    {
-        for (int j = 0; j < 100; j++)
-        {
-            printf("%c",grid[i][j]);
-        }
-        printf("\n");fflush(stdout);
-    }
-    printf("\n\n");fflush(stdout);
-}
-void initGrid(){
-    for (int i = 0; i < 25; i++)
-    {
-        for (int j = 0; j < 100; j++)
-        {
-            grid[i][j] = '.';
-        }
-    }
-}
+
 int ReadPID(char* Fname){
     char ff[30];
     fprintf(LogFile,"[%ld] Reading PID of %s From %s...\n",GetTimeNow(),Fname,ProcessNAme);
     sprintf(ff,"./.data/%s.txt",Fname);
-    FILE *f = fopen(ff,"r");
+    FILE* f;
+    if((f = fopen(ff,"r"))== NULL){
+        kill(ReadPID(MASTERF),SIGKILL);
+    }
     int pid;
     fscanf(f,"%d",&pid);
     //close file
@@ -76,10 +69,22 @@ void CreatePipes(int numPipes){
         char lastfilename[20];
         int mode;
         
-        sscanf(filenames[i],"%s %d",filename,&mode);
+        sscanf(PipeFN[i],"%s %d",filename,&mode);
         sprintf(lastfilename,"/tmp/%s",filename);
-        mkfifo(lastfilename, 0666);
-        fd[i] = open(lastfilename,openmode[mode]);
+        if((mkfifo(lastfilename, 0666)==-1) ){//check if it worked properly
+            if (access(lastfilename,F_OK)==-1)
+            {
+                PrintLog("a problem in makefifo pipe \n");
+                kill(ReadPID(MASTERF),SIGINT);
+            }
+        }
+        if ((fd[i] = open(lastfilename,openmode[mode]))==-1)
+        {
+        
+            PrintLog("Couldn't open the pipe\n");
+            kill(ReadPID(MASTERF),SIGINT);
+        }
+        
        
     }
     PrintLog("Starting pipes..All set.\n");
@@ -94,16 +99,33 @@ void GarbgeCollection(int numFiles)
         char filename[15];
         char ff[20];
         int mode;
-        sscanf(filenames[i],"%s %d",filename,&mode);
+        sscanf(PipeFN[i],"%s %d",filename,&mode);
 
         sprintf(ff,"/tmp/%s",filename);
-        printf("removing file %s\n",ff);
-        remove(ff);
-        close(fd[i]);
+        PrintLog("removing file %s\n",ff);
+        //Check if the file exist before removing
+        if(close(fd[i])==-1 ){
+            PrintLog("Couldn't Close pip %d The error is: %s\n",fd[i],strerror(errno));
+        }
+        if (access(ff,F_OK)!=-1)
+        {
+            int status;
+            if ((status = remove(ff))==-1)
+            {
+                PrintLog("Couldn't remove pip file %d The error is: %s\n",status,strerror(errno));
+            }
+            
+        }
     }
 
-    fclose(LogFile);
+    PrintLog("Closed Everything Quiting...\n");
+    kill(ReadPID(MASTERF),SIGINT);
+    if(fclose(LogFile)==-1 ){
+            printf("Couldn't Close Log file The error is: %s\n",strerror(errno));
+            sleep(5);
+        }
     exit(EXIT_SUCCESS);
+    
 }
 
 InfoHandler* SignalWithInfo(int signum, InfoHandler* handler)
@@ -116,14 +138,13 @@ InfoHandler* SignalWithInfo(int signum, InfoHandler* handler)
   action.sa_flags = SA_RESTART|SA_SIGINFO; /* restart syscalls if possible */
 
   if (sigaction(signum, &action, &old_action) < 0)
-perror("Signal error");fflush(stdout);
+            perror("Signal error");fflush(stdout);
   return (old_action.sa_sigaction);
 }
 
-int* PipeToSelect(int numPipes){
-    timeout.tv_usec = SAMPLING_PERIODE; 
+void PipeToSelect(int numPipes){
+    Timeout.tv_usec = SAMPLING_PERIODE; 
     fd_set fds;
-    int* ret = new int[numPipes];
     int tmp = 0;
     int maxfd;
     FD_ZERO(&fds); 
@@ -135,15 +156,12 @@ int* PipeToSelect(int numPipes){
             maxfd = fd[i];        
             }
     }
-    select(maxfd + 1, &fds, NULL, NULL, &timeout);
+    select(maxfd + 1, &fds, NULL, NULL, &Timeout);
     for (int i = 0; i < numPipes; i++){
-        ret[tmp] = FD_ISSET(fd[i], &fds);
+        choice[tmp] = FD_ISSET(fd[i], &fds);
         tmp++;
         
     }
-  
-
-    return ret;
     // We can optimize this by using linked list to save the index of the fd that are not 0 
 }
 
@@ -155,7 +173,11 @@ void CreateLog(char* Fname){
     char ff[20];
     // 
     sprintf(ff,"./.Logs/%s.log",Fname);
-    LogFile = fopen(ff,"w"); 
+
+    if((LogFile = fopen(ff,"w") ) == NULL){
+        printf("Error in Creating Log File ...\n");//you can redirect stderror to here..
+        kill(ReadPID(MASTERF),SIGINT);
+    } 
     PrintLog("Created Log File...\n");
 }
 

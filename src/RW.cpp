@@ -1,9 +1,10 @@
 #define RW 1
-#include "mu.h"
+#include "./../include/mu.h"
 
 /*                                      Signal Handler                                   */
 void signaleHandler(int sig){
     GarbgeCollection(NUM_PIPES);
+    
 }
 /*                                      End Signal Handler                               */
 
@@ -18,7 +19,7 @@ int main(){
     float x = 0,y = 0;
 
     while(1){
-        int* choice = PipeToSelect(2);
+        PipeToSelect(2);
         if (choice[0]) {
             ReceiveData(fd[0],&x);
             data.p[0] = x + x*0.05*(rand()*2)/(RAND_MAX+0.0f);
@@ -29,7 +30,7 @@ int main(){
             data.p[1] = y + y*0.005*(rand()*2)/(RAND_MAX+0.0f);
             SendData(fd[2],&data);
             }
-        delete(choice);
+            
         PrintLog("Received true x: %2f calc: %2f, true y: %2f calc: %2f \r",x,data.p[0],y,data.p[1]);
     
     }

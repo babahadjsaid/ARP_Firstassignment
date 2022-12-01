@@ -1,19 +1,18 @@
 //TODO switch to terminator
 
-#define MAIN 2
-#include "mu.h"
+#define MASTER 2
+#include "./../include/mu.h"
+
 
 /*                                      Signal Handler                                   */
 void handler(int sig) { 
-  for (int i = 0; i < NUM_PROC; i++)
-  {
-    PrintLog("Killing the process %s",CAA[i]);
-    kill(ReadPID(CAA[i]), SIGINT);
-  }
-
-  fclose(LogFile);
-  sleep(1);
-  exit(EXIT_SUCCESS);
+  
+  for (int i = 0; i < NUM_PROC; i++){
+      PrintLog("Killing the process %s\n",CAA[i]);
+      kill(ReadPID(CAA[i]), SIGINT);
+    }
+  
+  
 } 
 /*                                      End Signal Handler                               */
 
@@ -21,13 +20,12 @@ int main(){
     CreateLog(ProcessNAme);
     PrintLog("Setting up Signal Handler...\n");
     signal(SIGINT, handler);
-    WritePID(ProcessNAme);
+    WritePID(ProcessNAme);// Can be replaced with a database
 
     int status;
     char* tmp;
     for (int  i = 0; i < NUM_PROC; i++)
     {
-
       PrintLog("Creating the Process %s...\n",CAA[i]);
       sprintf(tmp,"./bin/%s",CAA[i]);
       if (i > FIRST_BACKGROUND_P)
@@ -43,6 +41,7 @@ int main(){
     }
     
     printf("Finished Creating Processes\n");fflush(stdout);
+
    /*
     TODO : Fix bugs of watch dog 
     while (1)
@@ -70,9 +69,23 @@ int main(){
     */
     pid_t wpid;
     while ((wpid = wait(&status)) > 0){
-        PrintLog("The process %d exited with status: %d\n",wpid,status);
+        printf("The process %d exited with status: %d",wpid,status);
+        if (status == -3)
+        {
+          kill(getpid(), SIGINT);
+        }
+        
+        perror("\n");
+        fflush(stdout);
+
     }
-  exit(EXIT_SUCCESS);
+    sleep(10);
+    fclose(LogFile);
+  return 0;
 
 }
 
+//TODO: Fix the error of segmentation fault
+// * start an error code schema
+// * see if there are further improvment in the exiting strategy
+// * 

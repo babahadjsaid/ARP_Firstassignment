@@ -35,14 +35,14 @@ int main(){
             continue;
         }
         // if the hoist reaches the limit of its track signal an emergency stop
-        if (y + speed*0.1f>=100 or y + speed*0.1f<0)
+        if (y + speed*SAMPLING_PERIODE US_S>=100 or y + speed*SAMPLING_PERIODE US_S<0)
         {
             kill(ReadPID(CMDF),SIGUSR1);
             goto Send;
         }
         // else update the postion according to the current speed 
 
-        y += speed*0.1f; 
+        y += speed*SAMPLING_PERIODE US_S; 
         
         // send the new Y Coordinate to the real world to apply noise to it 
         Send:SendData(fd[1],&y);

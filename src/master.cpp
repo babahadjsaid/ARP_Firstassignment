@@ -11,8 +11,18 @@ void handler(int sig) {
       PrintLog("Killing the process %s\n",CAA[i]);
       kill(ReadPID(CAA[i]), SIGINT);
     }
-  
-  
+  pid_t wpid;
+  int status;
+  while ((wpid = wait(&status)) > 0){
+      printf("The process %d exited with status: %d\n",wpid,status);
+      if (status == -3)
+      {
+        kill(getpid(), SIGINT);
+      }
+
+  }
+  fclose(LogFile);
+  exit(EXIT_SUCCESS);
 } 
 /*                                      End Signal Handler                               */
 
@@ -22,7 +32,7 @@ int main(){
     signal(SIGINT, handler);
     WritePID(ProcessNAme);// Can be replaced with a database
 
-    int status;
+    
     char* tmp;
     for (int  i = 0; i < NUM_PROC; i++)
     {
@@ -42,11 +52,10 @@ int main(){
     
     printf("Finished Creating Processes\n");fflush(stdout);
 
-   /*
-    TODO : Fix bugs of watch dog 
+    /*                             Start Watch Dog                                       */
     while (1)
     {
-      sleep(9);
+      sleep(WD_P);
       int min = INT32_MAX;
       for (int  i = 0; i < NUM_PROC; i++)
       {
@@ -55,37 +64,17 @@ int main(){
             min = tmp;
           }
       }
-      printf("%d",min);
-        if (min+1 >= 20){
-          kill(getpid(),SIGINT);
-          sleep(1);
-          goto waiting;
-
+      PrintLog("%d\n",min);
+        if (min+1 >= WD_T){
+          kill(ReadPID(CMDF),SIGUSR2);
         }
-      sleep(1);
-      
     }
-     waiting:
-    */
-    pid_t wpid;
-    while ((wpid = wait(&status)) > 0){
-        printf("The process %d exited with status: %d",wpid,status);
-        if (status == -3)
-        {
-          kill(getpid(), SIGINT);
-        }
-        
-        perror("\n");
-        fflush(stdout);
-
-    }
-    sleep(10);
-    fclose(LogFile);
-  return 0;
+    /*                             End Watch Dog                                       */
+    return 0;
 
 }
 
-//TODO: Fix the error of segmentation fault
+//TODO: 
 // * start an error code schema
 // * see if there are further improvment in the exiting strategy
 // * 

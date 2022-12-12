@@ -67,40 +67,17 @@ int main(int argc, char const *argv[]){
                     PrintLog("Rewinding!!!!\n");
                     kill(ReadPID(CMDF),SIGUSR2);
                 }
-            }
+            } 
         }
         //if there is data in the channel display it 
         PipeToSelect(1);
         if(choice[0]){
             ReceiveData(fd[0],&data);
-            ee_x = floor(data.p[0]);
-            ee_y = floor(data.p[1]/4);
+            ee_x = floor(data.p[0])*WR;
+            ee_y = floor(data.p[1])*HR;
             
         }
-        //collect the variable choice as it is a variable in the heap area
-        // it is bad for real time operation (non deterministic property) 
-        // I will try to replace it by a global variable
-        
 
-        // To be commented in final version...
-        switch (cmd)
-        {
-            case KEY_LEFT:
-                ee_x --;
-                break;
-            case KEY_RIGHT:
-                ee_x ++;
-                break;
-            case KEY_UP:
-                ee_y--;
-                break;
-            case KEY_DOWN:
-                ee_y++;
-                break;
-            default:
-                break;
-        }
-        
         // Update UI
         update_console_ui(&ee_x, &ee_y);
 	}

@@ -32,7 +32,7 @@ void WritePID(char* Fname){
     FILE *f;
     if ((f = fopen(ff,"w"))==NULL)
     {
-        perror("Error");
+        perror("Error Writing PID");
         exit(-3);
     }
     
@@ -119,10 +119,8 @@ void GarbgeCollection(int numFiles)
     }
 
     PrintLog("Closed Everything Quiting...\n");
-    kill(ReadPID(MASTERF),SIGINT);
     if(fclose(LogFile)==-1 ){
             printf("Couldn't Close Log file The error is: %s\n",strerror(errno));
-            sleep(5);
         }
     exit(EXIT_SUCCESS);
     
@@ -144,6 +142,7 @@ InfoHandler* SignalWithInfo(int signum, InfoHandler* handler)
 
 void PipeToSelect(int numPipes){
     Timeout.tv_usec = SAMPLING_PERIODE; 
+    Timeout.tv_sec = 0; 
     fd_set fds;
     int tmp = 0;
     int maxfd;
@@ -175,12 +174,12 @@ void CreateLog(char* Fname){
     sprintf(ff,"./.Logs/%s.log",Fname);
 
     if((LogFile = fopen(ff,"w") ) == NULL){
-        printf("Error in Creating Log File ...\n");//you can redirect stderror to here..
+        perror("Error in Creating Log File ...");//you can redirect stderror to here..
         kill(ReadPID(MASTERF),SIGINT);
     } 
     PrintLog("Created Log File...\n");
 }
-
+ 
 long GetTimeNow(){
     auto end = chrono::high_resolution_clock::now();
     return chrono::system_clock::to_time_t(end);

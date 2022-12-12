@@ -22,11 +22,11 @@ using namespace std;
 
 
 /*                                       Start Macros                                     */
-#define MS *1000
-#define NM MS MS MS
+#define US_MS *1000
+#define NM US_MS US_MS US_MS
 #define V (char*)
 #define NUM_PROC 5
-#define SAMPLING_PERIODE 100 MS
+#define SAMPLING_PERIODE 100 US_MS
 #define BUFF_SIZE 8192
 #define FLF fflush(LogFile);
 #define CMDF V"command"
@@ -35,6 +35,8 @@ using namespace std;
 #define M1F V"M1" 
 #define M2F V"M2" 
 #define RWF V"RW" 
+#define US_S /1000000
+
 /*                                       End Macros                                       */
 
 /*                                       Data Struct                                      */
@@ -74,7 +76,7 @@ void SendData(int fd,t *d){
 template <class t>
 void ReceiveData(int fd,t *d){
     #ifdef M2 
-    
+     
     #endif
     read(fd, d, sizeof(*d)); 
 }
@@ -115,6 +117,10 @@ int openmode[2] = {O_RDONLY,O_WRONLY};
 /*                                             MASTER                                      */
 #ifdef MASTER 
 #define FIRST_BACKGROUND_P 1
+// WD_P is  WATCH DOG PERIOD
+#define WD_P 15
+// WD_T is  WATCH DOG TIMEOUT 
+#define WD_T 30    
 FILE *LogFile;
 char Printable[100];
 char* ProcessNAme = MASTERF;
@@ -136,8 +142,11 @@ int choice;
 #ifdef CMD
 
 #define NUM_PIPES 2
-#define SAMPLING_PERIODE_KEYS 10 MS
-#define REWIND_PERIODE 1 MS MS
+#define SAMPLING_PERIODE_KEYS 10 US_MS
+#define REWIND_PERIODE 1 US_MS US_MS
+#define INCREMENT 1
+// RS is Rewind SPEED
+#define RS 2
 FILE *LogFile;
 char Printable[100];
 char* ProcessNAme = CMDF;
@@ -200,6 +209,10 @@ int choice[NUM_PIPES];
 
 /*                                             Inspect                                   */
 #ifdef Inspect
+// WR is WIDTHRATIO of the Grid
+#define WR 0.39
+// HR is HEIGHT RATIO of the Grid 
+#define HR 0.09
 FILE *LogFile;
 char Printable[100];
 #define NUM_PIPES 1

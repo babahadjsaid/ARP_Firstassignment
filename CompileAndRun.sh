@@ -11,4 +11,9 @@ g++ -o ./bin/M2 ./src/M2.cpp ./src/Myutilities.cpp
 echo "Compiling the main program";
 g++ src/master.cpp ./src/Myutilities.cpp -o bin/master
 echo "Runing the main program ";
+
+mkdir .data
+mkdir .Logs
+sudo chmod -R a+rwx .
+./bin/master
 ./bin/master

@@ -22,20 +22,24 @@ using namespace std;
 
 
 /*                                       Start Macros                                     */
+// time conversions
 #define US_MS *1000
-#define NM US_MS US_MS US_MS
+#define S_NS US_MS US_MS US_MS
+#define US_S /1000000
+
 #define V (char*)
-#define NUM_PROC 5
-#define SAMPLING_PERIODE 100 US_MS
-#define BUFF_SIZE 8192
 #define FLF fflush(LogFile);
+
+#define SAMPLING_PERIODE 100 US_MS
+#define NUM_PROC 5
+
+// Process names
 #define CMDF V"command"
 #define InspectF V"inspection"
 #define MASTERF V"master"
 #define M1F V"M1" 
 #define M2F V"M2" 
 #define RWF V"RW" 
-#define US_S /1000000
 
 /*                                       End Macros                                       */
 
@@ -51,17 +55,16 @@ struct Data{ float p[2] = {0.0f,0.0f};};
 /*                                       Start Functions declaration                      */
 
 InfoHandler* SignalWithInfo(int signum, InfoHandler* handler);
+
 void WritePID(char* Fname);
-void print(string p);
-void Closing();
+
 int spawn(char* comands,char* args[],int *pid);
 int ReadPID(char* Fname);
 void CreateLog(char* Fname);
 long GetTimeNow();
 void PrintLog(const char *fmt, ...);
 long GetLastEdit(char* Fname);
-void updateGrid();
-void initGrid();
+
 /*                                       End Functions declaration                        */
 
 
@@ -70,14 +73,10 @@ void initGrid();
 /*                                       Start Templates                                  */
 template <class t>
 void SendData(int fd,t *d){
-    
     write(fd, d, sizeof(*d));
 }
 template <class t>
 void ReceiveData(int fd,t *d){
-    #ifdef M2 
-     
-    #endif
     read(fd, d, sizeof(*d)); 
 }
 /*                                      End Templates                                     */

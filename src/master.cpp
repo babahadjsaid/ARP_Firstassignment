@@ -76,5 +76,3 @@ int main(){
 
 //TODO: 
 // * start an error code schema
-// * see if there are further improvment in the exiting strategy
-// * 

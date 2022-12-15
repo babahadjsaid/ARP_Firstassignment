@@ -14,7 +14,7 @@ The hoist is controlled by a command window in which there are 6 clickable butto
 
 - **_Vx+_** and **_Vx-_** to increment and decrement the speed along the x-axis
 - **_Vz+_** and **_Vz-_** to increment and decrement the speed along the y-axis
-- two **_STP_** buttons to set the speed along the corresponding axis to zero
+- **_STP_** button to set the speed along the corresponding axis to zero
 
 ![plot](./images/command.png)
 

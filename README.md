@@ -56,8 +56,8 @@ The program is composed of 6 processes:
 ## Other Files:
 - `Myutilities.cpp` contains all the functions that are common to all processes in one place, to simplify the reading process of the code, and as a way to create an abstraction.
 - `mu.h` a header file contains all that is needed for the code to run (the imports,global variables,MACROS,...).
-### Requirements
-## ncurses installation
+## Requirements:
+### ncurses installation
 To install the ncurses library, simply open a terminal and type the following command:
 ```console
 sudo apt-get install libncurses-dev

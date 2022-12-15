@@ -27,9 +27,9 @@ The position of the hoist is graphically shown on this window in which there are
 ![plot](./images/inspect.png)
 #### Additional features:
 - The hoist will automatically be reseted if it is not moved for more then 60 seconds.
-- During the execution of the program, each process will write information on their log file, located in the `.Logs` directory.
+- During the execution of the program, each process will write information on their log file, located in the `Logs` directory.
 ### Documentation:
-    you will find the full documentation of the code in the doc folder, by running the index.html file.
+you will find an auto generated documentation of the code in the doc folder, by running the index.html file.
 ## Folders tree:
 
 The repository is organized as follows:

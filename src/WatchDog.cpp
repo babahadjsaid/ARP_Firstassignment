@@ -35,7 +35,7 @@ int main(){
       }
       PrintLog("%d\n",min);
         if (min+1 >= WD_T){
-          //kill(ReadPID(CMDF),SIGUSR2);
+          kill(ReadPID(CMDF),SIGUSR2);
         }
     }
     

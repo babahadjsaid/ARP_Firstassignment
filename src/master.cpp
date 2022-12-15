@@ -52,10 +52,8 @@ int main(){
     
     while ((wpid = wait(&status)) > 0){
       printf("The process %d exited with status: %d\n",wpid,status);
-      if (status == -3)
-      {
-        kill(getpid(), SIGINT);
-      }
+      kill(getpid(), SIGINT);
+      
 
   }
     return 0;

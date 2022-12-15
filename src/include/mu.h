@@ -59,6 +59,10 @@ using namespace std;
 /*                                       Data Struct                                      */
 
 typedef void InfoHandler(int, siginfo_t *, void *);
+/**
+ * @brief Data structure that is used to send position of the hoist.
+ * 
+ */
 struct Data{ float p[2] = {0.0f,0.0f};};
 
 /*                                       End Data Struct                                  */
@@ -75,8 +79,8 @@ int ReadPID(char* Fname);
 int spawn(char* comands,char* args[],int *pid);
 
 void CreateLog(char* Fname);
-long GetTimeNow();
 void PrintLog(const char *fmt, ...);
+long GetTimeNow();
 long GetLastEdit(char* Fname);
 
 /*                                       End Functions declaration                        */
@@ -85,6 +89,7 @@ long GetLastEdit(char* Fname);
 
 
 /*                                       Start Templates                                  */
+
 template <class t>
 void SendData(int fd,t *d){
     write(fd, d, sizeof(*d));
@@ -100,6 +105,8 @@ void ReceiveData(int fd,t *d){
 /*                                        start                                           */
 
 /*                                             UTILS                                      */
+// here i put the global variables and function decmarations that shuold
+// be visible for all the files except Myutilities.cpp.
 #ifndef UTILS
 #include <iostream>
 struct timeval Timeout;
@@ -126,6 +133,8 @@ extern int choice[3];
 int openmode[2] = {O_RDONLY,O_WRONLY};
 #endif
 
+// the process mangment is a way to share the same global variable
+// with master and WatchDog, which are related to process managment.
 #ifdef PROCESS_MANAGMENT
 
 char *CAA[NUM_PROC] = {CMDF,InspectF,M1F,M2F,RWF,WatchDogF};//Commands And Arguments 
@@ -261,4 +270,4 @@ int choice[NUM_PIPES];
 #endif
 /*                                             End Inspect                                */
 
-/*                                         End                                            */
+/*                                         End File                                           */

@@ -5,7 +5,7 @@ digraph "src/inspection_console.cpp"
   node [fontname="Helvetica",fontsize="10",shape=record];
   Node1 [label="src/inspection_console.cpp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
   Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="./../include/mu.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node2 [label="include/mu.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
   Node1 -> Node3 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node3 [label="./../include/inspection\l_utilities.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node3 [label="include/inspection\l_utilities.h",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
 }

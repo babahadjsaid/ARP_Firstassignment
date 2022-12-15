@@ -3,14 +3,14 @@ Done By Baba HADJ SAID ID: 5413915
 ## User Manual and Documentation:
 ### User Manual:
 #### To Compile and Run the Program:
-Brows to the folder containing the project and run the command: 
+Browse to the folder containing the project and run the command: 
 ```console
 ./CompileAndRun.sh 
 ```
-This command will Compile and Run the program for you.
-you will then be prompt with Two konsole windows, which are as foolows:
+This command will set-up, Compile and Run the program.
+you will then be prompt with Two konsole windows, which are as follows:
 ##### Command Window:
-The hoist is controlled by a command window in which there are 6 clickable buttons:
+The hoist is controlled by a command window in which there are 6 buttons:
 
 - **_Vx+_** and **_Vx-_** to increment and decrement the speed along the x-axis
 - **_Vz+_** and **_Vz-_** to increment and decrement the speed along the y-axis
@@ -19,17 +19,17 @@ The hoist is controlled by a command window in which there are 6 clickable butto
 ![plot](./images/command.png)
 
 ##### Inspect Window:
-The position of the hoist is graphically shown on this window in which there are 2 buttons:
+The position of the hoist is shown on this window in which there are 2 buttons:
 
 - **_S_** (stop) to immediately stops the hoist
 - **_R_** (reset) to move back the hoist to the initial position.
 
 ![plot](./images/inspect.png)
 #### Additional features:
-- The hoist will automatically be reseted if it is not moved for more then 60 seconds.
+- The hoist will automatically be reseted if the hoist is not moved for more then 60 seconds.
 - During the execution of the program, each process will write information on their log file, located in the `Logs` directory.
 ### Documentation:
-you will find an auto generated documentation of the code in the doc folder, by running the index.html file.
+You will find an auto generated documentation of the code in the doc folder, by running the index.html file.
 ## Folders tree:
 
 The repository is organized as follows:

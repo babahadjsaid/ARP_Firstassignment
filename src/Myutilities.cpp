@@ -23,29 +23,29 @@ int spawn(char* comands,char* args[],int *pid){
     else
     {
         execvp(comands,args);
-        perror("Failed to execute");
+        PrintLog("Failed to execute the process: %s\n",strerror(errno));
         exit(EXIT_FAILURE);
     }
 }
 
 /**
- * @brief Creates a file to save the pid of the calling process.
+ * @brief //create/modify(if file exist) a file to write the pid of the calling process.
  * 
  * @param Fname name of the File
  */
 void WritePID(char* Fname){ 
-    //create/modify(if file exist) a file to write the pid of the main process 
-    fprintf(LogFile,"[%ld] Saving the %s Process ID...\n",GetTimeNow(),Fname);
+     
+    PrintLog("Saving the %s Process ID...\n",Fname);
+    // if the dolder .data is not already created,create it.
     mkdir("./.data/",0666);
     char ff[20];
-    // 
     sprintf(ff,"./.data/%s.txt",Fname);
     
     FILE *f;
     if ((f = fopen(ff,"w"))==NULL)
     {
-        perror("Error Writing PID");
-        exit(-3);
+        PrintLog("Error Writing PID: %s\n",strerror(errno));
+        exit(EXIT_FAILURE);
     }
     
 
@@ -59,16 +59,17 @@ void WritePID(char* Fname){
 /**
  * @brief Read the pid from a specific file 
  * 
- * @NOTE: this could be later interfaced with a database also.
+ * @NOTE: This could be later interfaced with a database also.
  * @param Fname name of the file from which we get the pid. 
  * @return int the pid of in the requested file.
  */
 int ReadPID(char* Fname){
     char ff[30];
-    fprintf(LogFile,"[%ld] Reading PID of %s From %s...\n",GetTimeNow(),Fname,ProcessNAme);
+    PrintLog("Reading PID of %s From %s...\n",Fname,ProcessNAme);
     sprintf(ff,"./.data/%s.txt",Fname);
     FILE* f;
     if((f = fopen(ff,"r"))== NULL){
+        PrintLog("Error opening PID file: %s\n",strerror(errno));
         kill(ReadPID(MASTERF),SIGKILL);
     }
     int pid;
@@ -93,10 +94,10 @@ void CreatePipes(int numPipes){
         
         sscanf(PipeFN[i],"%s %d",filename,&mode);
         sprintf(lastfilename,"/tmp/%s",filename);
-        if((mkfifo(lastfilename, 0666)==-1) ){//check if it worked properly
+        if((mkfifo(lastfilename, 0666)==-1) ){
             if (access(lastfilename,F_OK)==-1)
             {
-                PrintLog("a problem in makefifo pipe \n");
+                PrintLog("A problem in makefifo pipe: %s\n",strerror(errno));
                 kill(ReadPID(MASTERF),SIGINT);
             }
         }
@@ -104,7 +105,7 @@ void CreatePipes(int numPipes){
         if ((fd[i] = open(lastfilename,openmode[mode]))==-1)
         {
         
-            PrintLog("Couldn't open the pipe\n");
+            PrintLog("Couldn't open the pipe: %s\n",strerror(errno));
             kill(ReadPID(MASTERF),SIGINT);
         }
        
@@ -169,7 +170,7 @@ void SignalWithInfo(int signum, InfoHandler* handler)
   action.sa_flags = SA_RESTART|SA_SIGINFO; /* restart syscalls if possible */
 
   if (sigaction(signum, &action, &old_action) < 0)
-            perror("Signal error");fflush(stdout);
+            PrintLog("Signal error: %s\n",strerror(errno));
   return;
 }
 

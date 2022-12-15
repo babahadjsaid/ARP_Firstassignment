@@ -52,10 +52,10 @@ The program is composed of 6 processes:
 - `M2.cpp` does the same thing as `M1.cpp` for the y-axis.
 - `RW.cpp` gets the position from the two motors processes and applies a 5% random error to the measurement, to better simulate error accumulations in the real case scenarios, and send the position to the `inspection_console.c` process
 - `inspection_console.c` gets the position from the `RW.cpp` process and displays the hoist on a window, using ncurses GUI. 
-- WatchDog.cpp monitors the execution of the process, if there is no activity for 60s, it resets the hoist position.
+- `WatchDog.cpp` monitors the execution of the process, if there is no activity for 60s, it resets the hoist position.
 ## Other Files:
 - `Myutilities.cpp` contains all the functions that are common to all processes in one place, to simplify the reading process of the code, and as a way to create an abstraction.
--`mu.h` a header file contains all that is needed for the code to run (the imports,global variables,MACROS,...).
+- `mu.h` a header file contains all that is needed for the code to run (the imports,global variables,MACROS,...).
 ### Requirements
 ## ncurses installation
 To install the ncurses library, simply open a terminal and type the following command:

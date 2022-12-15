@@ -1,5 +1,5 @@
-#define M1 1
-#include "./../include/mu.h"
+#define M1 
+#include "include/mu.h"
 
 
 /*                                      Signal Handler                                   */

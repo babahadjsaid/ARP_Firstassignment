@@ -1,7 +1,7 @@
-#define CMD 1
-#include "./../include/mu.h"
+#define CMD 
+#include "include/mu.h"
 
-#include "./../include/command_utilities.h"
+#include "include/command_utilities.h"
 
 
 /*                                      Signal Handlers                                   */

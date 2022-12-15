@@ -1,9 +1,17 @@
-#define UTILS 2
+#define UTILS 
 
 
-#include "./../include/mu.h"
+#include "include/mu.h"
 
 
+/**
+ * @brief this function is used to create a new process. 
+ * 
+ * @param comands commands to execute.
+ * @param args the arguments to the newly created process.
+ * @param pid pointer to the pid of the created process it might contain the error status in case of failure of the fork sys call.
+ * @return int 
+ */
 
 int spawn(char* comands,char* args[],int *pid){
     pid_t pd = fork();
@@ -20,7 +28,11 @@ int spawn(char* comands,char* args[],int *pid){
     }
 }
 
-
+/**
+ * @brief Creates a file to save the pid of the calling process.
+ * 
+ * @param Fname name of the File
+ */
 void WritePID(char* Fname){ 
     //create/modify(if file exist) a file to write the pid of the main process 
     fprintf(LogFile,"[%ld] Saving the %s Process ID...\n",GetTimeNow(),Fname);
@@ -44,7 +56,13 @@ void WritePID(char* Fname){
 }
 
 
-
+/**
+ * @brief Read the pid from a specific file 
+ * 
+ * @NOTE: this could be later interfaced with a database also.
+ * @param Fname name of the file from which we get the pid. 
+ * @return int the pid of in the requested file.
+ */
 int ReadPID(char* Fname){
     char ff[30];
     fprintf(LogFile,"[%ld] Reading PID of %s From %s...\n",GetTimeNow(),Fname,ProcessNAme);
@@ -59,14 +77,18 @@ int ReadPID(char* Fname){
     fclose(f);
     return pid;
 }
-
+/**
+ * @brief Create a Pipes from a process specific pip array.
+ * 
+ * @param numPipes the number of pipes to create.
+ */
 void CreatePipes(int numPipes){
     PrintLog("Starting process %s,creating %d pipes\n",ProcessNAme,numPipes);fflush(stdout);
     PrintLog("Starting pipes..\r");
     for (int i = 0; i < numPipes; i++)
     {
         char filename[15];
-        char lastfilename[20];
+        char lastfilename[30];
         int mode;
         
         sscanf(PipeFN[i],"%s %d",filename,&mode);
@@ -78,19 +100,23 @@ void CreatePipes(int numPipes){
                 kill(ReadPID(MASTERF),SIGINT);
             }
         }
+        
         if ((fd[i] = open(lastfilename,openmode[mode]))==-1)
         {
         
             PrintLog("Couldn't open the pipe\n");
             kill(ReadPID(MASTERF),SIGINT);
         }
-        
        
     }
     PrintLog("Starting pipes..All set.\n");
 }
 
-
+/**
+ * @brief This function is to be called at the end of each process to free all the held resources.
+ * 
+ * @param numFiles number of pipes used by this process.
+ */
 void GarbgeCollection(int numFiles)
 {
     PrintLog("Removing and Closing all temp files \n");
@@ -126,7 +152,14 @@ void GarbgeCollection(int numFiles)
     
 }
 
-InfoHandler* SignalWithInfo(int signum, InfoHandler* handler)
+/**
+ * @brief a function used to set the handler such that it holds information like the pid of
+ * the process issueing the signal.
+ * 
+ * @param signum Signal number.
+ * @param handler the handler of the signal.
+ */
+void SignalWithInfo(int signum, InfoHandler* handler)
 {
   struct sigaction action, old_action;
 
@@ -137,9 +170,14 @@ InfoHandler* SignalWithInfo(int signum, InfoHandler* handler)
 
   if (sigaction(signum, &action, &old_action) < 0)
             perror("Signal error");fflush(stdout);
-  return (old_action.sa_sigaction);
+  return;
 }
 
+/**
+ * @brief an implemetation of random select when multiple pipes and single pipes are to be read from.
+ * 
+ * @param numPipes number of pipes to be read.
+ */
 void PipeToSelect(int numPipes){
     Timeout.tv_usec = SAMPLING_PERIODE; 
     Timeout.tv_sec = 0; 
@@ -165,13 +203,15 @@ void PipeToSelect(int numPipes){
 }
 
 
-
+/// @brief This function creates a log file of the process calling it.
+///  
+/// @param Fname the name of the Log file.
 void CreateLog(char* Fname){
     //create/modify(if file exist) a file to write the pid of the main process 
-    mkdir("./.Logs/",0666);
+    mkdir("Logs/",0666);
     char ff[20];
     // 
-    sprintf(ff,"./.Logs/%s.log",Fname);
+    sprintf(ff,"Logs/%s.log",Fname);
 
     if((LogFile = fopen(ff,"w") ) == NULL){
         perror("Error in Creating Log File ...");//you can redirect stderror to here..
@@ -179,15 +219,22 @@ void CreateLog(char* Fname){
     } 
     PrintLog("Created Log File...\n");
 }
- 
+/// @brief To get the current time.
+/// @return the current time in micro seconds.
 long GetTimeNow(){
     auto end = chrono::high_resolution_clock::now();
     return chrono::system_clock::to_time_t(end);
 }
 
+/**
+ * @brief Get the Last time the Log file was Edited.
+ * 
+ * @param Fname name of the log file.
+ * @return long returns the number of seconds since the log file was edited.
+ */
 long GetLastEdit(char* Fname){
     char* filename;
-    sprintf(filename,"./.Logs/%s.log",Fname);
+    sprintf(filename,"Logs/%s.log",Fname);
     struct stat result;
     if(stat(filename, &result)==0)
     {
@@ -195,7 +242,12 @@ long GetLastEdit(char* Fname){
     }
     return -1;
 }
-
+/**
+ * @brief Print a log message to the log file.
+ * 
+ * @param fmt formated message.
+ * @param ... parammeters to format the message.
+ */
 void PrintLog(const char *fmt, ...) {
     va_list args;
     va_start(args, fmt);

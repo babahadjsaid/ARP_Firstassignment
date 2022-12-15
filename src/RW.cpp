@@ -1,5 +1,5 @@
-#define RW 1
-#include "./../include/mu.h"
+#define RW 
+#include "include/mu.h"
 
 /*                                      Signal Handler                                   */
 void signaleHandler(int sig){

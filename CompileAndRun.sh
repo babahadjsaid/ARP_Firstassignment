@@ -1,7 +1,9 @@
 mkdir bin
 mkdir .data
-mkdir .Logs
+mkdir Logs
 sudo chmod -R a+rwx .
+echo "Compiling the WatchDog program";
+g++ src/WatchDog.cpp ./src/Myutilities.cpp -o bin/WatchDog
 echo "Compiling the inspect program";
 g++ src/inspection_console.cpp ./src/Myutilities.cpp -lncurses -lm -o bin/inspection
 echo "Compiling the cmd program";

@@ -1,6 +1,6 @@
 bin/*
 .data/*
-.Logs/*
+Logs/*
 src/test.cpp
 .vscode/*
 

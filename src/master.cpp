@@ -1,30 +1,29 @@
 //TODO switch to terminator
 
-#define MASTER 2
-#include "./../include/mu.h"
+#define MASTER 
+#define PROCESS_MANAGMENT 
+#include "include/mu.h"
 
 
 /*                                      Signal Handler                                   */
+
 void handler(int sig) { 
   
   for (int i = 0; i < NUM_PROC; i++){
       PrintLog("Killing the process %s\n",CAA[i]);
       kill(ReadPID(CAA[i]), SIGINT);
     }
-  pid_t wpid;
-  int status;
+  
   while ((wpid = wait(&status)) > 0){
       printf("The process %d exited with status: %d\n",wpid,status);
-      if (status == -3)
-      {
-        kill(getpid(), SIGINT);
-      }
-
   }
+  GarbgeCollection(NUM_PIPES);
   fclose(LogFile);
   exit(EXIT_SUCCESS);
 } 
 /*                                      End Signal Handler                               */
+
+
 
 int main(){
     CreateLog(ProcessNAme);
@@ -32,8 +31,7 @@ int main(){
     signal(SIGINT, handler);
     WritePID(ProcessNAme);// Can be replaced with a database
 
-    
-    char* tmp;
+    char tmp[50];
     for (int  i = 0; i < NUM_PROC; i++)
     {
       PrintLog("Creating the Process %s...\n",CAA[i]);
@@ -51,25 +49,15 @@ int main(){
     }
     
     printf("Finished Creating Processes\n");fflush(stdout);
-
-    /*                             Start Watch Dog                                       */
-    while (1)
-    {
-      sleep(WD_P);
-      int min = INT32_MAX;
-      for (int  i = 0; i < NUM_PROC; i++)
+    
+    while ((wpid = wait(&status)) > 0){
+      printf("The process %d exited with status: %d\n",wpid,status);
+      if (status == -3)
       {
-        int tmp = GetTimeNow() - GetLastEdit(CAA[i]);
-          if(tmp<=min){
-            min = tmp;
-          }
+        kill(getpid(), SIGINT);
       }
-      PrintLog("%d\n",min);
-        if (min+1 >= WD_T){
-          kill(ReadPID(CMDF),SIGUSR2);
-        }
-    }
-    /*                             End Watch Dog                                       */
+
+  }
     return 0;
 
 }

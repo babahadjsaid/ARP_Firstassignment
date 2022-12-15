@@ -1,6 +1,6 @@
-#define Inspect 1
-#include "./../include/mu.h"
-#include "./../include/inspection_utilities.h"
+#define Inspect 
+#include "include/mu.h"
+#include "include/inspection_utilities.h"
 
 
 

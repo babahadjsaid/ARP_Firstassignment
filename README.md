@@ -6,7 +6,7 @@ Done By Baba HADJ SAID ID: 5413915
 Brows to the folder containing the project and run the command: 
 ```console
 ./CompileAndRun.sh 
-``
+```
 This command will Compile and Run the program for you.
 you will then be prompt with Two konsole windows, which are as foolows:
 ##### Command Window:
@@ -61,4 +61,4 @@ The program is composed of 6 processes:
 To install the ncurses library, simply open a terminal and type the following command:
 ```console
 sudo apt-get install libncurses-dev
-``
+```

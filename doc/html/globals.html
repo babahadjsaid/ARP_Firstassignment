@@ -9,9 +9,18 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -22,8 +31,25 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ARP Assignment
+   &#160;<span id="projectnumber">early alpha</span>
    </div>
+   <div id="projectbrief">Short documentation of the project</div>
   </td>
+   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
  </tr>
  </tbody>
 </table>
@@ -35,17 +61,23 @@
 var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
 /* @license-end */
 </script>
-<script type="text/javascript" src="menudata.js"></script>
-<script type="text/javascript" src="menu.js"></script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(function() {
-  initMenu('',true,false,'search.php','Search');
-  $(document).ready(function() { init_search(); });
-});
-/* @license-end */</script>
-<div id="main-nav"></div>
-</div><!-- top -->
+$(document).ready(function(){initNavTree('globals.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,24 +99,39 @@ $(function() {
 <li>CMD
 : <a class="el" href="command__console_8cpp.html#a0a5ceb9ceb914e08d345410b561cb37a">command_console.cpp</a>
 </li>
+<li>CMDF
+: <a class="el" href="mu_8h.html#a635bfcf61c9e1691c303ca18dc14b307">mu.h</a>
+</li>
 <li>CreateLog()
-: <a class="el" href="_myutilities_8cpp.html#ad84d1534c03a7617dc29b1526a01e4bf">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#ad84d1534c03a7617dc29b1526a01e4bf">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#ad84d1534c03a7617dc29b1526a01e4bf">Myutilities.cpp</a>
 </li>
 <li>CreatePipes()
-: <a class="el" href="_myutilities_8cpp.html#a8467ecc3371b1640450054c3a17903ae">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#ab1e6bb432d99a1ba4fd565284d80e4df">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a8467ecc3371b1640450054c3a17903ae">Myutilities.cpp</a>
+</li>
+</ul>
+
+
+<h3><a id="index_f"></a>- f -</h3><ul>
+<li>FLF
+: <a class="el" href="mu_8h.html#a975136e300e1c3f11b80b47a925b1393">mu.h</a>
 </li>
 </ul>
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
 <li>GarbgeCollection()
-: <a class="el" href="_myutilities_8cpp.html#a17b98f08315496fef5e3a77c9a9c1670">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a17b98f08315496fef5e3a77c9a9c1670">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a17b98f08315496fef5e3a77c9a9c1670">Myutilities.cpp</a>
 </li>
 <li>GetLastEdit()
-: <a class="el" href="_myutilities_8cpp.html#a91acb70361b030f7b7fb0d8d821f87cb">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a91acb70361b030f7b7fb0d8d821f87cb">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a91acb70361b030f7b7fb0d8d821f87cb">Myutilities.cpp</a>
 </li>
 <li>GetTimeNow()
-: <a class="el" href="_myutilities_8cpp.html#a2cfbf684da446f7a64ea5d134be4fa66">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a2cfbf684da446f7a64ea5d134be4fa66">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a2cfbf684da446f7a64ea5d134be4fa66">Myutilities.cpp</a>
 </li>
 </ul>
 
@@ -98,8 +145,21 @@ $(function() {
 
 
 <h3><a id="index_i"></a>- i -</h3><ul>
+<li>InfoHandler
+: <a class="el" href="mu_8h.html#a735aabfb399862cb731ab4f0a67243b4">mu.h</a>
+</li>
 <li>Inspect
 : <a class="el" href="inspection__console_8cpp.html#ae7013eb59496dbcb9b5f9cfe8e66a49a">inspection_console.cpp</a>
+</li>
+<li>InspectF
+: <a class="el" href="mu_8h.html#a6e358663a20430f98a706dfab383f5f4">mu.h</a>
+</li>
+</ul>
+
+
+<h3><a id="index_l"></a>- l -</h3><ul>
+<li>LogFile
+: <a class="el" href="mu_8h.html#a927459878a7530ff5847e74e8ece5765">mu.h</a>
 </li>
 </ul>
 
@@ -108,8 +168,14 @@ $(function() {
 <li>M1
 : <a class="el" href="_m1_8cpp.html#ac597abe7cf610f262f7aaec53ed1d413">M1.cpp</a>
 </li>
+<li>M1F
+: <a class="el" href="mu_8h.html#affc1f74908b234b756aad3309c180048">mu.h</a>
+</li>
 <li>M2
 : <a class="el" href="_m2_8cpp.html#a2a187ef3afced0eb4c4cb99515e5429c">M2.cpp</a>
+</li>
+<li>M2F
+: <a class="el" href="mu_8h.html#adbde2f124e8814751d36ba8c0a2a7d87">mu.h</a>
 </li>
 <li>main()
 : <a class="el" href="command__console_8cpp.html#abf9e6b7e6f15df4b525a2e7705ba3089">command_console.cpp</a>
@@ -123,15 +189,30 @@ $(function() {
 <li>MASTER
 : <a class="el" href="master_8cpp.html#a3fa2d3bf1901157f734a584d47b25d8b">master.cpp</a>
 </li>
+<li>MASTERF
+: <a class="el" href="mu_8h.html#ad94b245c7622d1a42945786eaef91105">mu.h</a>
+</li>
+</ul>
+
+
+<h3><a id="index_n"></a>- n -</h3><ul>
+<li>NUM_PROC
+: <a class="el" href="mu_8h.html#acee2369f62e4a096d243dec3cd7d0b00">mu.h</a>
+</li>
 </ul>
 
 
 <h3><a id="index_p"></a>- p -</h3><ul>
 <li>PipeToSelect()
-: <a class="el" href="_myutilities_8cpp.html#a5da7cb303d71cbd969070c139b06bf7f">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a5da7cb303d71cbd969070c139b06bf7f">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a5da7cb303d71cbd969070c139b06bf7f">Myutilities.cpp</a>
+</li>
+<li>Printable
+: <a class="el" href="mu_8h.html#aa77963184064d0118af32774d2a3719d">mu.h</a>
 </li>
 <li>PrintLog()
-: <a class="el" href="_myutilities_8cpp.html#a360b5b21dd95303c40bcdef0f1be3837">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a360b5b21dd95303c40bcdef0f1be3837">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a360b5b21dd95303c40bcdef0f1be3837">Myutilities.cpp</a>
 </li>
 <li>PROCESS_MANAGMENT
 : <a class="el" href="master_8cpp.html#a9cdab78bf2ce4625cf78eed187f51603">master.cpp</a>
@@ -142,7 +223,11 @@ $(function() {
 
 <h3><a id="index_r"></a>- r -</h3><ul>
 <li>ReadPID()
-: <a class="el" href="_myutilities_8cpp.html#a23879d9688a4e998a01e3e5a8cb89d32">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a23879d9688a4e998a01e3e5a8cb89d32">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a23879d9688a4e998a01e3e5a8cb89d32">Myutilities.cpp</a>
+</li>
+<li>ReceiveData()
+: <a class="el" href="mu_8h.html#a094db7eb122124a1538c9b6d8f597ed5">mu.h</a>
 </li>
 <li>Rewind()
 : <a class="el" href="command__console_8cpp.html#a7480fd135bb619832b353ccd7fbc45ca">command_console.cpp</a>
@@ -150,10 +235,22 @@ $(function() {
 <li>RW
 : <a class="el" href="_r_w_8cpp.html#afc4ded33ac0ca43defcce639e965748a">RW.cpp</a>
 </li>
+<li>RWF
+: <a class="el" href="mu_8h.html#a3a3c9ddc3b908a3be5c3109fa7a27331">mu.h</a>
+</li>
 </ul>
 
 
 <h3><a id="index_s"></a>- s -</h3><ul>
+<li>S_NS
+: <a class="el" href="mu_8h.html#ad5287a6644df15c31a23dec59cac6190">mu.h</a>
+</li>
+<li>SAMPLING_PERIODE
+: <a class="el" href="mu_8h.html#a2a436b428bcd484618299f245c049b87">mu.h</a>
+</li>
+<li>SendData()
+: <a class="el" href="mu_8h.html#a872c0aecb2f763bfb8e5bc9658f00b8a">mu.h</a>
+</li>
 <li>signaleHandler()
 : <a class="el" href="command__console_8cpp.html#a1e6ac2a5684744b5f331a31d6e5a2fb8">command_console.cpp</a>
 , <a class="el" href="inspection__console_8cpp.html#a1e6ac2a5684744b5f331a31d6e5a2fb8">inspection_console.cpp</a>
@@ -162,10 +259,12 @@ $(function() {
 , <a class="el" href="_r_w_8cpp.html#a1e6ac2a5684744b5f331a31d6e5a2fb8">RW.cpp</a>
 </li>
 <li>SignalWithInfo()
-: <a class="el" href="_myutilities_8cpp.html#a5ec2ea34a5a9cb1a7a6c1094f01e2459">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#a5ec2ea34a5a9cb1a7a6c1094f01e2459">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#a5ec2ea34a5a9cb1a7a6c1094f01e2459">Myutilities.cpp</a>
 </li>
 <li>spawn()
-: <a class="el" href="_myutilities_8cpp.html#ad4f8dd7431355395f005d57b23ffee16">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#ad4f8dd7431355395f005d57b23ffee16">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#ad4f8dd7431355395f005d57b23ffee16">Myutilities.cpp</a>
 </li>
 <li>Stop()
 : <a class="el" href="command__console_8cpp.html#aadde1b2278ef225f1cea28903ee470b4">command_console.cpp</a>
@@ -173,9 +272,29 @@ $(function() {
 </ul>
 
 
+<h3><a id="index_t"></a>- t -</h3><ul>
+<li>Timeout
+: <a class="el" href="mu_8h.html#a765265444b7026b8b77da5c6f0716155">mu.h</a>
+</li>
+</ul>
+
+
 <h3><a id="index_u"></a>- u -</h3><ul>
+<li>US_MS
+: <a class="el" href="mu_8h.html#a41d794e0a322e2af7c4768a33d08b7ab">mu.h</a>
+</li>
+<li>US_S
+: <a class="el" href="mu_8h.html#aea84f76787f3d056beb165099f63ed67">mu.h</a>
+</li>
 <li>UTILS
 : <a class="el" href="_myutilities_8cpp.html#a5b511bfc979da8860c56686aecfce965">Myutilities.cpp</a>
+</li>
+</ul>
+
+
+<h3><a id="index_v"></a>- v -</h3><ul>
+<li>V
+: <a class="el" href="mu_8h.html#af40a326b23c68a27cebe60f16634a2cb">mu.h</a>
 </li>
 </ul>
 
@@ -184,14 +303,21 @@ $(function() {
 <li>WatchDog
 : <a class="el" href="_watch_dog_8cpp.html#ab23c84d5283befbf680e889dae6cc491">WatchDog.cpp</a>
 </li>
+<li>WatchDogF
+: <a class="el" href="mu_8h.html#a57ad6113ca68dcd1c87b0e7b8eff029d">mu.h</a>
+</li>
 <li>WritePID()
-: <a class="el" href="_myutilities_8cpp.html#abc5ae5339ab6b872b0366ee1f1e646b2">Myutilities.cpp</a>
+: <a class="el" href="mu_8h.html#abc5ae5339ab6b872b0366ee1f1e646b2">mu.h</a>
+, <a class="el" href="_myutilities_8cpp.html#abc5ae5339ab6b872b0366ee1f1e646b2">Myutilities.cpp</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
 </body>
 </html>

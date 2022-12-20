@@ -5,6 +5,7 @@ Done By Baba HADJ SAID ID: 5413915
 #### To Compile and Run the Program:
 Browse to the folder containing the project and run the command: 
 ```console
+chmod +x ./CompileAndRun.sh
 ./CompileAndRun.sh 
 ```
 This command will set-up, Compile and Run the program.
@@ -29,7 +30,7 @@ The position of the hoist is shown on this window in which there are 2 buttons:
 - The hoist will automatically be reseted if the hoist is not moved for more then 60 seconds.
 - During the execution of the program, each process will write information on their log file, located in the `Logs` directory.
 ### Documentation:
-You will find an auto generated documentation of the code in the doc folder, by running the index.html file.
+You will find an auto-generated documentation of the code in the doc folder, by running the index.html file.
 ## Folders tree:
 
 The repository is organized as follows:

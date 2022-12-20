@@ -9,7 +9,7 @@ var _myutilities_8cpp =
     [ "PipeToSelect", "_myutilities_8cpp.html#a5da7cb303d71cbd969070c139b06bf7f", null ],
     [ "PrintLog", "_myutilities_8cpp.html#a360b5b21dd95303c40bcdef0f1be3837", null ],
     [ "ReadPID", "_myutilities_8cpp.html#a23879d9688a4e998a01e3e5a8cb89d32", null ],
-    [ "SignalWithInfo", "_myutilities_8cpp.html#a9bd259f2afe44c04bd00b1b474c5c5a4", null ],
+    [ "SignalWithInfo", "_myutilities_8cpp.html#a5ec2ea34a5a9cb1a7a6c1094f01e2459", null ],
     [ "spawn", "_myutilities_8cpp.html#ad4f8dd7431355395f005d57b23ffee16", null ],
     [ "WritePID", "_myutilities_8cpp.html#abc5ae5339ab6b872b0366ee1f1e646b2", null ]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['m1_59',['M1',['../_m1_8cpp.html#ac597abe7cf610f262f7aaec53ed1d413',1,'M1.cpp']]],
-  ['m2_60',['M2',['../_m2_8cpp.html#a2a187ef3afced0eb4c4cb99515e5429c',1,'M2.cpp']]],
-  ['master_61',['MASTER',['../master_8cpp.html#a3fa2d3bf1901157f734a584d47b25d8b',1,'master.cpp']]]
+  ['inspect_92',['Inspect',['../inspection__console_8cpp.html#ae7013eb59496dbcb9b5f9cfe8e66a49a',1,'inspection_console.cpp']]],
+  ['inspectf_93',['InspectF',['../mu_8h.html#a6e358663a20430f98a706dfab383f5f4',1,'mu.h']]]
 ];

@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['readpid_21',['ReadPID',['../_myutilities_8cpp.html#a23879d9688a4e998a01e3e5a8cb89d32',1,'Myutilities.cpp']]],
-  ['rewind_22',['Rewind',['../command__console_8cpp.html#a7480fd135bb619832b353ccd7fbc45ca',1,'command_console.cpp']]],
-  ['rw_23',['RW',['../_r_w_8cpp.html#afc4ded33ac0ca43defcce639e965748a',1,'RW.cpp']]],
-  ['rw_2ecpp_24',['RW.cpp',['../_r_w_8cpp.html',1,'']]]
+  ['logfile_15',['LogFile',['../mu_8h.html#a927459878a7530ff5847e74e8ece5765',1,'mu.h']]]
 ];

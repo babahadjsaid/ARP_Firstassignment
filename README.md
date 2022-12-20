@@ -3,13 +3,12 @@ Done By Baba HADJ SAID ID: 5413915
 ## User Manual and Documentation:
 ### User Manual:
 #### Requirements:
-##### ncurses installation
 To install the ncurses library, simply open a terminal and type the following command:
 ```console
 sudo apt-get install libncurses-dev
 ```
 #### To Compile and Run the Program:
-Browse to the folder containing the project and run the command: 
+Browse to the folder containing the project Open a CMD and run the command: 
 ```console
 chmod +x ./CompileAndRun.sh
 ./CompileAndRun.sh 

@@ -60,5 +60,3 @@ int main(){
 
 }
 
-//TODO: 
-// * start an error code schema

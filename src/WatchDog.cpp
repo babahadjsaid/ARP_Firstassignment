@@ -1,5 +1,3 @@
-//TODO switch to terminator
-
 #define WatchDog 
 #define PROCESS_MANAGMENT 
 #include "include/mu.h"
@@ -33,8 +31,8 @@ int main(){
             min = tmp;
           }
       }
-      PrintLog("%d\n",min);
         if (min+1 >= WD_T){
+          PrintLog("%d seconds of being inactive Rewinding.\n",min);
           kill(ReadPID(CMDF),SIGUSR2);
         }
     }

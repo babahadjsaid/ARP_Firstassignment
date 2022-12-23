@@ -34,6 +34,11 @@ The position of the hoist is shown on this window in which there are 2 buttons:
 #### Additional features:
 - The hoist will automatically be reseted if the hoist is not moved for more then 60 seconds.
 - During the execution of the program, each process will write information on their log file, located in the `Logs` directory.
+- The project can be easily configured by changing some MACROS in the file mu.h, the Configurable parameters are:
+    - The SAMPLING_PERIODE of the system can be changed, the default value is 100 ms.
+    - The graphic system is made in the scale of 0 to 100 which can be changed into any screen ration for example in this setup we have the width of the screen is 39 so the parameter WR in the inspect part is set to 0.39, same thing goes for the height HR.
+    - The watch dog period and last active process parameters are by default WD_P and WD_T respectively.
+    - The name of any process can be changed and so the log files, and we can also change the name of the pipes.
 ### Documentation:
 You will find an auto-generated documentation of the code in the doc folder, by running the index.html file.
 ## Folders tree:

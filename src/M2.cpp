@@ -46,6 +46,7 @@ int main(){
         
         // send the new Y Coordinate to the real world to apply noise to it 
         Send:SendData(fd[1],&y);
+        PrintLog("Y position is %2f\n",y);
         // Repeat this process indefinitly
 
     }

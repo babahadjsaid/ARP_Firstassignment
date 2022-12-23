@@ -46,6 +46,7 @@ int main(){
         // send the new X location to the real world to apply noise to it 
         
         Send:SendData(fd[1],&x);
+        PrintLog("X position is %2f\n",x);
         // Repeat this process indefinitly
         
     }

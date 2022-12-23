@@ -7,6 +7,11 @@
 /**
  * @brief this function is used to create a new process. 
  * 
+ * The function will fork() to create new child then the exec() system call to 
+ * run either the konsole in case of foreground processes or one of the processes 
+ * in the background, it returns the pid of the child to the parent(master in this case)
+ * by modifying the variable pid, in case of failiure it writes to the log and sends a a SIGINT
+ * it self because we know that this is the master.
  * @param comands commands to execute.
  * @param args the arguments to the newly created process.
  * @param pid pointer to the pid of the created process it might contain the error status in case of failure of the fork sys call.
@@ -16,6 +21,12 @@
 int spawn(char* comands,char* args[],int *pid){
     pid_t pd = fork();
     *pid = pd;
+    if (pd<0)
+    {
+        PrintLog("Failed to fork the process: %s\n",strerror(errno));
+        kill(getpid(),SIGINT);
+    }
+    
     if (pd != 0)
     {
         return pd;
@@ -24,12 +35,14 @@ int spawn(char* comands,char* args[],int *pid){
     {
         execvp(comands,args);
         PrintLog("Failed to execute the process: %s\n",strerror(errno));
-        exit(EXIT_FAILURE);
+        kill(getpid(),SIGINT);
+        return -1;
     }
 }
 
 /**
  * @brief //create/modify(if file exist) a file to write the pid of the calling process.
+ * 
  * 
  * @param Fname name of the File
  */
@@ -45,7 +58,8 @@ void WritePID(char* Fname){
     if ((f = fopen(ff,"w"))==NULL)
     {
         PrintLog("Error Writing PID: %s\n",strerror(errno));
-        exit(EXIT_FAILURE);
+        /* This is to terminate any process*/
+        kill(getpid(),SIGINT);
     }
     
 
@@ -70,7 +84,7 @@ int ReadPID(char* Fname){
     FILE* f;
     if((f = fopen(ff,"r"))== NULL){
         PrintLog("Error opening PID file: %s\n",strerror(errno));
-        kill(ReadPID(MASTERF),SIGKILL);
+        kill(getpid(),SIGINT);
     }
     int pid;
     fscanf(f,"%d",&pid);
@@ -94,10 +108,12 @@ void CreatePipes(int numPipes){
         
         sscanf(PipeFN[i],"%s %d",filename,&mode);
         sprintf(lastfilename,"/tmp/%s",filename);
+        
         if((mkfifo(lastfilename, 0666)==-1) ){
             if (access(lastfilename,F_OK)==-1)
             {
                 PrintLog("A problem in makefifo pipe: %s\n",strerror(errno));
+                /*This problem is crucial so We have to terminate all processes */
                 kill(ReadPID(MASTERF),SIGINT);
             }
         }
@@ -215,7 +231,7 @@ void CreateLog(char* Fname){
     sprintf(ff,"Logs/%s.log",Fname);
 
     if((LogFile = fopen(ff,"w") ) == NULL){
-        perror("Error in Creating Log File ...");//you can redirect stderror to here..
+        perror("Error in Creating Log File ...");
         kill(ReadPID(MASTERF),SIGINT);
     } 
     PrintLog("Created Log File...\n");
@@ -245,6 +261,7 @@ long GetLastEdit(char* Fname){
 }
 /**
  * @brief Print a log message to the log file.
+ * 
  * 
  * @param fmt formated message.
  * @param ... parammeters to format the message.

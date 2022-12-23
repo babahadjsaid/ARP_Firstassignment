@@ -20,11 +20,11 @@ int main(int argc, char const *argv[]){
     //Set up signal handler
     PrintLog("Setting up Signal Handler...\n");
     signal(SIGINT,signaleHandler);
-    //Save PID for process communication through signals
+    // Save PID for process communication through signals
     WritePID(ProcessNAme);
-    //Create Pipes for process communication.
+    // Create Pipes for process communication.
     CreatePipes(NUM_PIPES);
-    //Data to transfer through the pipe.
+    // Data to transfer through the pipe.
     Data data;
     // Utility variable to avoid trigger resize event on launch
     int first_resize = TRUE;
@@ -71,6 +71,7 @@ int main(int argc, char const *argv[]){
         }
         //if there is data in the channel display it 
         PipeToSelect(1);
+        
         if(choice[0]){
             ReceiveData(fd[0],&data);
             ee_x = floor(data.p[0])*WR;

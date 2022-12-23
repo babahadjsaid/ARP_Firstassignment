@@ -19,6 +19,8 @@ int main(){
     float x = 0,y = 0;
 
     while(1){
+        /* select the pip to Read from M1 or M2 if both ready 
+                the function will randomally select a pipe*/
         PipeToSelect(2);
         if (choice[0]) {
             ReceiveData(fd[0],&x);
@@ -32,8 +34,9 @@ int main(){
             SendData(fd[2],&data);
             goto printing;
             }
+        /*If no pipe was selected continue */
         continue;
-        printing:PrintLog("Received true x: %2f calc: %2f, true y: %2f calc: %2f \r",x,data.p[0],y,data.p[1]);
+        printing:PrintLog("Noisy X value: %2f, noisy Y value: %2f \r",data.p[0],data.p[1]);
     
     }
     return 0;
